@@ -16,15 +16,15 @@ services:
     # build: ./backend/
     env_file: .env
     volumes: #
-      - media:/media #
-      - static:/static #
+      - static:/backend_static/
+      - media:/media/ #
   frontend:
     image: vladimiriakushev/kittygram_frontend
     env_file: .env
     # build: ./frontend/
-    command: cp -r /app/build/. /static/
+    command: cp -r /app/build/. /frontend_static/
     volumes:
-      - static:/static
+      - static:/frontend_static/
   gateway:
     # build: ./nginx/
     image: vladimiriakushev/kittygram_gateway #
@@ -32,5 +32,5 @@ services:
     ports:
       - 9000:80
     volumes:
-      - media:/media
-      - static:/static
+      - static:/staticfiles/
+      - media:/media/
