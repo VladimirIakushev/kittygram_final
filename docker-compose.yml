@@ -3,6 +3,7 @@ version: '3'
 volumes:
   pg_data:
   static:
+  media:
 
 services:
   db:
@@ -14,7 +15,8 @@ services:
     build: ./backend/
     env_file: .env
     volumes:
-      - static:/backend_static
+      - static:/static
+      - media:/media
     depends_on:
       - db
   frontend:
@@ -22,11 +24,12 @@ services:
     build: ./frontend/
     command: cp -r /app/build/. /frontend_static/
     volumes:
-      - static:/frontend_static
+      - static:/static
   gateway:
     build: ./nginx/
     env_file: .env
     volumes:
-      - static:/staticfiles
+      - static:/static
+      - media:/media
     ports:
-      - 8000:80 
+      - 9000:80 
